@@ -1,51 +1,184 @@
 $(document).ready(function(){
-var timerSec=[];
-var timerMin=[];
-startCount(timerMin,timerSec);
-$("#reset").click(function(){
-	console.log('reset');
-	for(var i=0;i<timerSec.length;i++){
-		console.log(timerSec.length);
-		clearTimeout(timerSec[i]);
-		clearTimeout(timerMin[i]);
+var bss=0;
+var bfs=0;
+var bsm=0;
+var bfm=0;
+var isPaused=false;
+var sstm,fstm,smtm,fmtm;
+startCount(bss,bfs,bsm,bfm);
+var timerSecSec=setInterval(function(){
+	for (var i = 0; i < 10; i++) {
+		if(!isPaused){
+		sstm=setTimeout(function (i) {
+  			$("#secsec").text(i);
+  			}, 1000* i + 1, i);
 		}
-	startCount(timerSec,timerMin);
-});
-function startCount(tm,ts){
-	timeCount(timerSec,"#seconds",1000);
-	timeCount(timerMin,"#minutes",60000);
-}
-function timeCount(arr,iddiv,delay){
-	while(arr.length>0){
-		arr.pop();
+		else{
+			clearTimeout(sstm);
+		}
 	}
-	console.log('length:'+arr.length);
-	var toI, toJ;
-	for(var i=0;i<=6;i++){
-		toI=setTimeout(function(i){
-			if(i==6){
-				i=0;
-				console.log('if i');
-			}
-			for (var j = 0; j <=10; j++) {
-  				toJ=setTimeout(function (j,i) {
-  					if(j==10){
-  						console.log('if j');
-  						i++;
-  						if(i==6){
-  							i=0;
-  						}
-						j=0;
-  					}
-  					//console.log(i,j);
-    				$(iddiv).text(i+''+j);
-  				}, delay * j + 1, j,i);
-			}
+},10000);
+var timerFirstSec=setInterval(function(){
+	for (var i = 0; i < 6; i++) {
+		if(!isPaused){
+  		fstm=setTimeout(function (i) {
+  			$("#firstsec").text(i);
+  			}, 10000* i + 1, i);}
+  		else{
+			clearTimeout(fstm);
+		}
+	}
+},60000);
+var timerSecMin=setInterval(function(){
+	for (var i = 0; i < 10; i++) {
+		if(!isPaused){
+  		smtm=setTimeout(function (i) {
+  			$("#secmin").text(i);
+  			}, 60000* i + 1, i);}
+		else{
+			clearTimeout(smtm);
+		}
+	}
+		
+},600000);
+var timerFirstMin=setInterval(function(){
+	for (var i = 0; i < 6; i++) {
+		if(isPaused){
+  		fmtm=setTimeout(function (i) {
+  			$("#firstmin").text(i);
+  			}, 600000* i + 1, i);
+  		}
+		else{
+			clearTimeout(fmtm);
+		}
+	}
+},3600000);
 
-		},delay*10*i+1,i);
+$("#pause").click(function(){
+	isPaused=!isPaused;
+	pause();
+});
+console.log(bfm,bsm,bfs,bss);
+$("#reset").click(function(){
+	isPaused=true;
+	pause();
+	bss=0;
+	bfs=0;
+	bsm=0;
+	bfm=0;
+	isPaused=false;
+	startCount(bfm,bsm,bfs,bss);
+	var timerSecSec=setInterval(function(){
+	for (var i = 0; i < 10; i++) {
+		if(!isPaused){
+		var sstm=setTimeout(function (i) {
+  			$("#secsec").text(i);
+  			}, 1000* i + 1, i);
+		}
+		else{
+			clearTimeout(sstm);
+		}
 	}
-	arr.push(toJ);
-	arr.push(toI);
+},10000);
+var timerFirstSec=setInterval(function(){
+	for (var i = 0; i < 6; i++) {
+		if(!isPaused){
+  		var fstm=setTimeout(function (i) {
+  			$("#firstsec").text(i);
+  			}, 10000* i + 1, i);}
+  		else{
+			clearTimeout(fstm);
+		}
+	}
+},60000);
+var timerSecMin=setInterval(function(){
+	for (var i = 0; i < 10; i++) {
+		if(!isPaused){
+  		var smtm=setTimeout(function (i) {
+  			$("#secmin").text(i);
+  			}, 60000* i + 1, i);}
+		else{
+			clearTimeout(smtm);
+		}
+	}
+		
+},600000);
+var timerFirstMin=setInterval(function(){
+	for (var i = 0; i < 6; i++) {
+		if(isPaused){
+  		var fmtm=setTimeout(function (i) {
+  			$("#firstmin").text(i);
+  			}, 600000* i + 1, i);
+  		}
+		else{
+			clearTimeout(fmtm);
+		}
+	}
+},3600000);
+});
+function startCount(begss,begfs,begsm,begfm){
+	var secSec=timeCount("#secsec",10,1000,begss);
+	var firstSec=timeCount("#firstsec",6,10000,begfs);
+	var secMin=timeCount("#secmin",10,60000,begsm);
+	var firstMin=timeCount("#firstmin",6,600000,begfm);
+}
+function timeCount(iddiv,limit,delay,beg){
+	for (var i = beg; i < limit; i++) {
+		console.log('timcount ');
+		if(!isPaused){
+  		var tmout=setTimeout(function (i) {
+  			$(iddiv).text(i);
+  		}, delay * i + 1, i);}
+  		else{
+  			clearTimeout(tmout);
+  		}
+	}
+}
+function pause(){
+	if(isPaused){
+		console.log('pause');
+		clearInterval(timerSecSec);
+		clearInterval(timerFirstSec);
+		clearInterval(timerSecMin);
+		clearInterval(timerFirstMin);
+		console.log('done');
+		bss=$("#secsec").text();
+		bfs=$("#firstsec").text();
+		bsm=$("#secmin").text();
+		bfm=$("#firstmin").text();
+		console.log(bfm,bsm,bfs,bss);
+	}
+	else{
+		startCount(bss,bfs,bsm,bfm);
+		var timerSecSec=setInterval(function(){
+			for (var i = 0; i < 10; i++) {
+				sstm=setTimeout(function (i) {
+  				$("#secsec").text(i);
+  				}, 1000* i + 1, i);
+			}
+		},10000);
+		var timerFirstSec=setInterval(function(){
+			for (var i = 0; i < 6; i++) {
+  				fstm=setTimeout(function (i) {
+  				$("#firstsec").text(i);
+  				}, 10000* i + 1, i);
+			}
+		},60000);
+		var timerSecMin=setInterval(function(){
+			for (var i = 0; i < 10; i++) {
+  				smtm=setTimeout(function (i) {
+  				$("#secmin").text(i);
+  				}, 60000* i + 1, i);
+			}
+		},600000);
+		var timerFirstMin=setInterval(function(){
+			for (var i = 0; i < 6; i++) {
+  				fmtm=setTimeout(function (i) {
+  				$("#firstmin").text(i);
+  				}, 600000* i + 1, i);
+			}
+		},3600000);
+	}
 }
 });
 

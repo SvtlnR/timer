@@ -32,6 +32,7 @@ footer{
 	font-family: "Verdana";
 	border:10px solid #8B795E;
 }
+
 .timer{
 	text-align: center;
 	font-size: 20vh;
@@ -42,6 +43,10 @@ footer{
 	color:#CDC9A5;
 	font-size: 400%;
 	font-family: "Verdana";
+}
+.min,.sec{
+	display: inline-block;
+	padding: 0;
 }
 .time{
 	display: inline-block;
