@@ -1,7 +1,7 @@
 $(document).ready(function(){
 var timerSec=[];
 var timerMin=[];
-//startCount(timerMin,timerSec);
+startCount(timerMin,timerSec);
 $("#reset").click(function(){
 	console.log('reset');
 	for(var i=0;i<timerSec.length;i++){
