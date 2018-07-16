@@ -1,5 +1,101 @@
 $(document).ready(function(){
-var bss=0;
+var ss=0;
+var fs=0;
+var sm=0;
+var fm=0;
+var isPaused=false;
+var timer=setInterval(function(){
+	ss++;
+	if(ss==10){
+		ss=0;
+		fs++;
+		if(fs==6){
+			fs=0;
+			sm++;
+			if(sm==10){
+				sm=0;
+				fm++;
+				if(fm==6){
+					fm==0;
+				}
+				$("#firstmin").text(fm);
+			}
+			$("#secmin").text(sm);
+		}
+		$("#firstsec").text(fs);
+	}
+	$("#secsec").text(ss);
+	},1000);
+
+$("#reset").click(function(){
+	isPaused=false;
+	clearInterval(timer);
+	ss=0;
+	fs=0;
+	sm=0;
+	fm=0;
+	$("#firstmin").text(fm);
+	$("#secmin").text(sm);
+	$("#firstsec").text(fs);
+	$("#secsec").text(ss);
+	timer=setInterval(function(){
+	ss++;
+	if(ss==10){
+		ss=0;
+		fs++;
+		if(fs==6){
+			fs=0;
+			sm++;
+			if(sm==10){
+				sm=0;
+				fm++;
+				if(fm==6){
+					fm==0;
+				}
+				$("#firstmin").text(fm);
+			}
+			$("#secmin").text(sm);
+		}
+		$("#firstsec").text(fs);
+	}
+	$("#secsec").text(ss);
+	},1000);
+
+});
+$("#pause").click(function(){
+	isPaused=!isPaused;
+	pause();
+});
+function pause(){
+	if(isPaused){
+		clearInterval(timer);
+	}
+	else{
+		timer=setInterval(function(){
+			ss++;
+			if(ss==10){
+				ss=0;
+				fs++;
+				if(fs==6){
+					fs=0;
+					sm++;
+					if(sm==10){
+						sm=0;
+						fm++;
+						if(fm==6){
+							fm==0;
+						}
+						$("#firstmin").text(fm);
+					}
+					$("#secmin").text(sm);
+				}
+				$("#firstsec").text(fs);
+			}
+			$("#secsec").text(ss);
+		},1000);
+	}
+}
+/*var bss=0;
 var bfs=0;
 var bsm=0;
 var bfm=0;
@@ -179,6 +275,6 @@ function pause(){
 			}
 		},3600000);
 	}
-}
+}*/
 });
 
